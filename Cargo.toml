@@ -1,0 +1,11 @@
+[package]
+name = "unsafe_unwrap"
+version = "0.1.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+categories = ["no-std"]
+repository = "https://github.com/nvzqz/unsafe-unwrap-rs"
+homepage = "https://github.com/nvzqz/unsafe-unwrap-rs"
+keywords = ["unsafe", "unwrap", "option", "result"]
+description = "Unsafely unwrap Result and Option types without checking."
