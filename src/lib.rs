@@ -20,6 +20,7 @@
 //! ```
 
 #![no_std]
+#![cfg_attr(test, feature(test))]
 
 /// A type whose instances can be unsafely unwrapped without checking.
 ///
@@ -97,5 +98,34 @@ mod tests {
             let x: Result<(), _> = Err(0);
             x.unsafe_unwrap();
         }
+    }
+}
+
+#[cfg(test)]
+mod benches {
+    extern crate test;
+    use self::test::{Bencher, black_box};
+    use super::*;
+
+    static OPT: Option<u32> = Some(0);
+
+    #[bench]
+    fn bench_normal_unwrap_1000(b: &mut Bencher) {
+        let r = OPT.as_ref();
+        b.iter(|| {
+            for _ in 0..1000 {
+                black_box(black_box(r).unwrap());
+            }
+        });
+    }
+
+    #[bench]
+    fn bench_unsafe_unwrap_1000(b: &mut Bencher) {
+        let r = OPT.as_ref();
+        b.iter(|| unsafe {
+            for _ in 0..1000 {
+                black_box(black_box(r).unsafe_unwrap());
+            }
+        });
     }
 }
